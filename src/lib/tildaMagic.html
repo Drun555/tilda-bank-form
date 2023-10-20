@@ -1,6 +1,7 @@
 <script>
     // БЛОК С ДАННЫМИ И ФОРМУЛАМИ
     // СЛЕДУЮЩИЙ (НЕ ЭТОТ, А СЛЕДУЮЩИЙ) БЛОК T123 - САМА ФОРМА, НЕ УДАЛЯТЬ.
+    // Исходники: https://github.com/Drun555/tilda-bank-form
     //  _______                       __              ________                                
     // /       \                     /  |            /        |                               
     // $$$$$$$  |  ______   _______  $$ |   __       $$$$$$$$/______    ______   _____  ____  
@@ -36,6 +37,11 @@
     // Получение суммы кредита.
     window.bankForm.f.getLoanAmount = (costOfRealEstate) => {
         return (costOfRealEstate / 100) * 145
+    }
+
+    // Получение первоначальный взнос в AED.
+    window.bankForm.f.getCalcInitialFee = (costOfRealEstate, initialFee) => {
+        return costOfRealEstate / 100 * initialFee
     }
     
     // Высчитывание ежемесячного платёжа.
