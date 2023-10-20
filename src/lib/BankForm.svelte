@@ -10,9 +10,6 @@
   // Первоначальный взнос
   let initialFee = window.bankForm.initialFee
 
-  
-  
-
   // Срок
   let mortgageYears = window.bankForm.mortgageYears;
 
@@ -34,7 +31,7 @@
 
   // Первоначальный взнос в AED
   let calcInitialFee; 
-  $: calcInitialFee = window.bankForm.f.getCalcInitialFee
+  $: calcInitialFee = window.bankForm.f.getCalcInitialFee(costOfRealEstate, initialFee)
 
   // Сумма кредита
   let loanAmount = 31740000;
