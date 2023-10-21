@@ -176,7 +176,7 @@
         display: block;
         position: relative;
         padding-left: 30px;
-        /* padding-top: 2px; */
+        padding-top: 1px;
         margin-bottom: 12px;
         cursor: pointer;
         font-size: 12px;
@@ -215,6 +215,11 @@
     }
 
     @media screen and (max-width: 480px) {
+        .container-checkbox {
+            padding-top: 0px;
+            line-height: 0.9;
+        }
+
         .container-checkbox .checkmark {
             background-color: rgb(255, 222, 138);
         }

@@ -233,6 +233,10 @@
             gap: 40px !important;
         }
 
+        yellowInputHolder {
+            justify-content: space-between;
+        }
+
         fCol:first-child {
             position: relative;
             box-sizing: border-box;
@@ -271,6 +275,9 @@
             padding: 0;
         }
 
+        yellowInputHolder {
+            gap: 40px !important;
+        }
 
         fCol:first-child {
             position: relative;
@@ -333,7 +340,7 @@
 
 
         yellowBackground {
-            padding: var(--padding) !important;
+            padding: 30px !important;
             gap: 20px;
         }
     }
@@ -344,6 +351,15 @@
             --padding: 60px
         }
         
+        fCol:first-child {
+            width: 420px;
+        }
+
+        fCol:nth-child(2) {
+            width: unset;
+        }
+
+
         bankForm {
             width: 1160px;
         }
@@ -353,13 +369,13 @@
         }
 
         yellowInputHolder {
-            justify-content: space-between;
+            gap: 60px !important;
         }
 
         :global(yellowInputHolder div) {
             min-width: auto !important;
         }
-        
+
         fRow {
             flex-direction: row;
             gap: 100px;
