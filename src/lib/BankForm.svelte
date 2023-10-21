@@ -352,6 +352,14 @@
             flex-direction: column;
         }
 
+        yellowInputHolder {
+            justify-content: space-between;
+        }
+
+        :global(yellowInputHolder div) {
+            min-width: auto !important;
+        }
+        
         fRow {
             flex-direction: row;
             gap: 100px;
