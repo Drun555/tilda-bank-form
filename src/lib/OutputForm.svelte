@@ -142,7 +142,7 @@
     }
 
     a {
-        color: #404040;
+        color: #404040 !important; 
     }
 
     .inputHolder {
@@ -165,7 +165,6 @@
     outputForm {
         display: flex;
         flex-direction: column;
-        padding-top: 26px;
         align-items: baseline;
     }
 
@@ -213,6 +212,21 @@
     /* When the checkbox is checked, add a blue background */
     .container-checkbox input:checked ~ .checkmark {
         background-color: #FFF5D6;
+    }
+
+    @media screen and (max-width: 480px) {
+        .container-checkbox .checkmark {
+            background-color: rgb(255, 222, 138);
+        }
+
+        .container-checkbox:hover input ~ .checkmark {
+        background-color: rgb(255, 222, 138);
+        }
+
+        /* When the checkbox is checked, add a blue background */
+        .container-checkbox input:checked ~ .checkmark {
+            background-color: rgb(255, 222, 138);
+        }
     }
 
     /* Create the checkmark/indicator (hidden when not checked) */

@@ -150,7 +150,7 @@
     }
 
     :global(.secondCol h2) {
-        font-size: 22px;
+        font-size: 26px;
     }
 
     @media screen 
@@ -241,8 +241,7 @@
         }
 
         yellowBackground {
-            position: relative;
-            height: 100%;
+            gap: 18px;
             padding: var(--padding) !important;
         }
 
@@ -251,7 +250,7 @@
 
     @media screen 
     and (min-width: 640px) 
-    and (max-width: 1200px){
+    and (max-width: 960px){
         :root {
             --padding: 40px
         }
@@ -281,16 +280,68 @@
         }
 
         yellowBackground {
-            position: relative;
-            height: 100%;
+            gap: 20px;
             padding: var(--padding) !important;
+        }
+    }
+
+    @media screen 
+    and (min-width: 960px) 
+    and (max-width: 1200px){
+        :root {
+            --padding: 40px
+        }
+
+        :global(.secondCol h2) {
+            font-size: 22px;
+        }
+
+        bankForm {
+            width: 940px;
+            padding-bottom: 0 !important;
+        }
+
+        fCol:first-child {
+            width: 390px;
+        }
+
+        yellowInputHolder {
+            justify-content: space-between;
+        }
+
+        :global(yellowInputHolder div) {
+            min-width: auto !important;
+        }
+
+        :global(calcEntity yellowinputholder div:first-child) {
+            width: 198px !important;
+            min-width: auto !important;
+            box-sizing: border-box;
+        }
+
+        :global(calcEntity yellowinputholder div:nth-child(2)) {
+            width: 180px !important;
+            min-width: auto !important;
+            box-sizing: border-box;
+        }
+
+        fRow {
+            gap: var(--padding);
+            width: 100%;
+            padding: var(--padding);
+        }
+
+
+        yellowBackground {
+            padding: var(--padding) !important;
+            gap: 20px;
         }
     }
 
     @media screen 
     and (min-width: 1201px){
         :root {
-            --padding: 40px
+            --padding: 60px
         }
         
         bankForm {
@@ -303,12 +354,17 @@
 
         fRow {
             flex-direction: row;
-            gap: var(--padding);
+            gap: 100px;
             padding: var(--padding);
         }
 
         fCol {
             
+        }
+
+        yellowBackground {
+            gap: 20px;
+            padding: 40px !important;
         }
     }
 

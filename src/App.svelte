@@ -2,10 +2,14 @@
   import BankForm from './lib/BankForm.svelte'
 
   // Скрываем донор-форму
-  let donorForm = document.querySelector( window.bankForm.donorFormID )
-  donorForm.style.visibility = 'collapse'
-  donorForm.style.position = 'absolute'
-  donorForm.style.height = '0'
+  let donorForm = document.querySelector( window.bankForm.donorFormID ) ?? null
+
+  if (donorForm) {
+    donorForm.style.visibility = 'collapse'
+    donorForm.style.position = 'absolute'
+    donorForm.style.height = '0'
+  }
+  
   
 </script>
 
