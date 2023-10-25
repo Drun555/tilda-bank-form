@@ -13,6 +13,9 @@
   // Срок
   let mortgageYears = window.bankForm.mortgageYears;
 
+  // Ставка
+  let bankRate = window.bankForm.bankRate * 100;
+
   // Правильное написание срока (год, года, лет)
   let correctYearPronounce = '';
   $: if (mortgageYears) {
@@ -40,10 +43,6 @@
   // Ежемесячный платёж
   let monthlyFee = 0;
   $: monthlyFee = window.bankForm.f.getMonthlyFee(loanAmount, mortgageYears)
-
-  // Максимальная стоимость недвижимости
-  let maxRealestate = 0;
-  $: maxRealestate = window.bankForm.f.getMaxRealestate(loanAmount, initialFee)
   
   let screenWidth;
 </script>
@@ -87,7 +86,7 @@
                             <YellowDisabledInput changeClass={'secondCol'} number={monthlyFee} currency="AED" tip="Ежемесячный платёж" />
                         </yellowInputHolder>
                         <yellowInputHolder>
-                            <YellowDisabledInput changeClass={'secondCol'} number={maxRealestate} currency="AED" tip="Максимальная сумма недвижимости" />
+                            <YellowDisabledInput changeClass={'secondCol'} number={bankRate} currency="%" tip="Ставка" />
                         </yellowInputHolder>
                         
                         <div>
@@ -104,7 +103,7 @@
                             <YellowDisabledInput changeClass={'secondCol funnyInner'} number={monthlyFee} currency="AED" tip="Ежемесячный платёж" />
                         </funnyColorBlock>
                         <funnyColorBlock style="background-color: #ffe9b0">
-                            <YellowDisabledInput changeClass={'secondCol funnyInner'} number={maxRealestate} currency="AED" tip="Максимальная сумма недвижимости" />
+                            <YellowDisabledInput changeClass={'secondCol funnyInner'} number={bankRate} currency="%" tip="Ставка" />
                         </funnyColorBlock>
                         <funnyColorBlock style="background-color: #ffde8a">
 
@@ -275,8 +274,12 @@
             padding: 0;
         }
 
+        :global(yellowbackground yellowInputHolder) {
+            justify-content: space-between;
+        }
+
         yellowInputHolder {
-            gap: 40px !important;
+            gap: 10px !important;
         }
 
         fCol:first-child {
@@ -312,7 +315,7 @@
             width: 390px;
         }
 
-        yellowInputHolder {
+        :global(yellowbackground yellowInputHolder) {
             justify-content: space-between;
         }
 
@@ -368,12 +371,28 @@
             flex-direction: column;
         }
 
-        yellowInputHolder {
+        /* :global(yellowbackground yellowInputHolder) {
+            gap: 10px !important;
+        } */
+
+        :global(yellowbackground yellowInputHolder) {
             gap: 60px !important;
         }
 
         :global(yellowInputHolder div) {
             min-width: auto !important;
+        }
+
+        :global(calcEntity yellowinputholder div:first-child) {
+            width: 198px !important;
+            min-width: auto !important;
+            box-sizing: border-box;
+        }
+
+        :global(calcEntity yellowinputholder div:nth-child(2)) {
+            width: 180px !important;
+            min-width: auto !important;
+            box-sizing: border-box;
         }
 
         fRow {
@@ -418,9 +437,10 @@
         flex-direction: column;
         padding: 20px;
     }
+
     yellowInputHolder {
         display: flex;
-        gap: 1em;
+        gap: 10px;
     }
 
     calcEntity h4 {
