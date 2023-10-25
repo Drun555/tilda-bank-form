@@ -38,7 +38,7 @@
 
   // Сумма кредита
   let loanAmount = 31740000;
-  $: loanAmount = window.bankForm.f.getLoanAmount(costOfRealEstate)
+  $: costOfRealEstate, loanAmount = window.bankForm.f.getLoanAmount(costOfRealEstate)
 
   // Ежемесячный платёж
   let monthlyFee = 0;
@@ -66,7 +66,7 @@
                         <YellowDisabledInput number={calcInitialFee} currency="AED" />
                         <YellowDisabledInput number={initialFee} currency="%" />
                     </yellowInputHolder>
-                    <h4>Стоимость недвижимости</h4>
+                    <h4>Первоначальный взнос</h4>
                     <Slider bind:value={initialFee} min={20} max={80} step={1} minName='20%' maxName='80%' />
                 </calcEntity>
                 <calcEntity>
