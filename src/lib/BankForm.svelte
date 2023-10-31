@@ -21,12 +21,18 @@
   $: if (mortgageYears) {
     let myStr = mortgageYears.toString()
     
-    console.log('fun')
     if ( Number(myStr[myStr.length - 1]) == 1 && (mortgageYears < 10 || mortgageYears > 19) ) correctYearPronounce = 'год'
     else if ( Number(myStr[myStr.length - 1]) <= 5 && Number(myStr[myStr.length - 1]) !== 0 && (mortgageYears < 10 || mortgageYears > 19) ) correctYearPronounce = 'года'
     else correctYearPronounce = 'лет' 
   } 
 
+  // Сначала все инпуты серые. После изменения - становятся черными.
+  let firstInput = true;
+  $: if (
+    costOfRealEstate !== window.bankForm.costOfRealEstate ||
+    initialFee !== window.bankForm.initialFee ||
+    mortgageYears !== window.bankForm.mortgageYears
+  ) firstInput = false;
 
   // 
   // Используем формулы, которые мы указали в другом блоке
@@ -38,7 +44,7 @@
 
   // Сумма кредита
   let loanAmount = 31740000;
-  $: costOfRealEstate, loanAmount = window.bankForm.f.getLoanAmount(costOfRealEstate)
+  $: costOfRealEstate, loanAmount = window.bankForm.f.getLoanAmount(costOfRealEstate, initialFee, mortgageYears)
 
   // Ежемесячный платёж
   let monthlyFee = 0;
@@ -56,22 +62,22 @@
             <fCol>
                 <calcEntity>
                     <yellowInputHolder>
-                        <YellowDisabledInput number={costOfRealEstate} currency="AED" />
+                        <YellowDisabledInput active={true} min={500000} max={60000000} bind:number={costOfRealEstate} currency="AED" />
                     </yellowInputHolder>
                     <h4>Стоимость недвижимости</h4>
                     <Slider bind:value={costOfRealEstate} min={500000} max={60000000} step={10000} minName='500 000 AED' maxName='60 000 000 AED' />
                 </calcEntity>
                 <calcEntity>
                     <yellowInputHolder>
+                        <YellowDisabledInput active={true} min={20} max={80} bind:number={initialFee} currency="%" />
                         <YellowDisabledInput number={calcInitialFee} currency="AED" />
-                        <YellowDisabledInput number={initialFee} currency="%" />
                     </yellowInputHolder>
                     <h4>Первоначальный взнос</h4>
                     <Slider bind:value={initialFee} min={20} max={80} step={1} minName='20%' maxName='80%' />
                 </calcEntity>
                 <calcEntity>
                     <yellowInputHolder>
-                        <YellowDisabledInput number={mortgageYears} currency={correctYearPronounce}/>
+                        <YellowDisabledInput active={true} min={1} max={20} bind:number={mortgageYears} currency={correctYearPronounce}/>
                     </yellowInputHolder>
                     <h4>Срок</h4>
                     <Slider bind:value={mortgageYears} min={1} max={20} step={1} minName='1 год' maxName='20 лет' />
@@ -82,11 +88,11 @@
                     {#if screenWidth > 480}
                     <yellowBackground>
                         <yellowInputHolder>
-                            <YellowDisabledInput changeClass={'secondCol'} number={loanAmount} currency="AED" tip="Сумма кредита" />
-                            <YellowDisabledInput changeClass={'secondCol'} number={monthlyFee} currency="AED" tip="Ежемесячный платёж" />
+                            <YellowDisabledInput {firstInput} changeClass={'secondCol'} number={loanAmount} currency="AED" tip="Сумма кредита" />
+                            <YellowDisabledInput {firstInput} changeClass={'secondCol'} number={monthlyFee} currency="AED" tip="Ежемесячный платёж" />
                         </yellowInputHolder>
                         <yellowInputHolder>
-                            <YellowDisabledInput changeClass={'secondCol'} number={bankRate} currency="%" tip="Ставка" />
+                            <YellowDisabledInput {firstInput} changeClass={'secondCol'} number={bankRate} currency="%" tip="Ставка" />
                         </yellowInputHolder>
                         
                         <div>
@@ -97,13 +103,13 @@
                     <!-- iPhone -->
                     <funnyBlocks>
                         <funnyColorBlock style="background-color: #fff5d6">
-                            <YellowDisabledInput changeClass={'secondCol funnyInner'} number={loanAmount} currency="AED" tip="Сумма кредита" />
+                            <YellowDisabledInput {firstInput} changeClass={'secondCol funnyInner'} number={loanAmount} currency="AED" tip="Сумма кредита" />
                         </funnyColorBlock>
                         <funnyColorBlock style="background-color: #ffe9b0">
-                            <YellowDisabledInput changeClass={'secondCol funnyInner'} number={monthlyFee} currency="AED" tip="Ежемесячный платёж" />
+                            <YellowDisabledInput {firstInput} changeClass={'secondCol funnyInner'} number={monthlyFee} currency="AED" tip="Ежемесячный платёж" />
                         </funnyColorBlock>
                         <funnyColorBlock style="background-color: #ffe9b0">
-                            <YellowDisabledInput changeClass={'secondCol funnyInner'} number={bankRate} currency="%" tip="Ставка" />
+                            <YellowDisabledInput {firstInput} changeClass={'secondCol funnyInner'} number={bankRate} currency="%" tip="Ставка" />
                         </funnyColorBlock>
                         <funnyColorBlock style="background-color: #ffde8a">
 
@@ -275,7 +281,7 @@
         }
 
         :global(yellowbackground yellowInputHolder) {
-            justify-content: space-between;
+            gap: 15px !important;
         }
 
         yellowInputHolder {
@@ -441,6 +447,7 @@
     yellowInputHolder {
         display: flex;
         gap: 10px;
+        overflow: hidden;
     }
 
     calcEntity h4 {

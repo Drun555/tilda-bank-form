@@ -15,7 +15,7 @@
 
 <div class="green-theme">
   
-    <Range min={min} max={max} step={step} initialValue={value} on:change={(e) => value = e.detail.value} />
+    <Range min={min} max={max} step={step} bind:value={value} on:change={(e) => value = e.detail.value} />
 
     <div class='sliderNames'>
       <h4>

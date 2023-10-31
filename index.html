@@ -25,13 +25,13 @@
       window.bankForm.donorFormID = '#rec655808900'
       
       // Начальная сумма недвижимости
-      window.bankForm.costOfRealEstate = 33750000
+      window.bankForm.costOfRealEstate = 5000000
       
       // Начальный первоначальный взнос в %
-      window.bankForm.initialFee = 62
+      window.bankForm.initialFee = 20
       
       // Начальный срок
-      window.bankForm.mortgageYears = 15
+      window.bankForm.mortgageYears = 10
       
       // Ставка. 0.05 = 5%
       window.bankForm.bankRate = 0.05
@@ -39,18 +39,20 @@
       // ___НИЖЕ ФОРМУЛЫ___________________________________________________________________________________
       
       // Получение суммы кредита.
-      window.bankForm.f.getLoanAmount = (costOfRealEstate) => {
-          return (costOfRealEstate / 100) * 145
+      window.bankForm.f.getLoanAmount = (costOfRealEstate, initialFee, mortgageYears) => {
+        console.log('shit')
+        // Сумма кредита = Стоимость недвижимости * (100% - первоначальный платёж в %) * Ставку 
+        return (costOfRealEstate * ((100 - initialFee) / 100)) * window.bankForm.bankRate / ( 1 - Math.pow(1+window.bankForm.bankRate, -mortgageYears) ) * mortgageYears
       }
   
       // Получение первоначальный взнос в AED.
       window.bankForm.f.getCalcInitialFee = (costOfRealEstate, initialFee) => {
-          return costOfRealEstate / 100 * initialFee
+        return costOfRealEstate / 100 * initialFee
       }
       
       // Высчитывание ежемесячного платёжа.
       window.bankForm.f.getMonthlyFee = (loanAmount, mortgageYears) => {
-          return loanAmount * window.bankForm.bankRate / ( 1 - Math.pow(1+window.bankForm.bankRate, -mortgageYears) )
+        return loanAmount / mortgageYears / 12
       }
 
       // Дальше - сгенерированный код от бандлера. Если хотите изменить сам код, то проходите на страницу исходников,

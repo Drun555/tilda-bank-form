@@ -12,17 +12,23 @@
     let acceptPolicy = false;
     
     let dateInputType = 'text'
+    
+    let success = false;
 
     function sendData() {
+        if ( !checkThis() ) return
+
         let elements = document.querySelector(window.bankForm.donorFormID + " form").elements;
 
         elements.Name.value = name;
         elements.Tel.value = telephone;
         elements.Date.value = (new Date(dateOfBirth)).toLocaleDateString();
 
+        console.log('submitting');
         for (const key in elements) {
             if (elements[key].type === 'submit') {
                 elements[key].click()
+                success = true;
                 return
             }
         }
@@ -30,25 +36,40 @@
     }
 
     let canSend = false;
-    function checkThis(i) {
-        canSend = true;
-        console.log(i)
-        if ( i.type !== 'checkbox' )
-            if ( !i.checkValidity() ) {
-                i.reportValidity();
+    function checkThis(i?) {
+        if (!i) {
+            canSend = true;
+            document.querySelectorAll('.inputHolder input').forEach(i => {
+                if ( !i.checkValidity() || !i.value ) {
+                    canSend = false
+                    i.classList.add('invalid')
+                } else {
+                    i.classList.remove('invalid')
+                }   
+            })
+
+            if (!acceptPolicy) {
+                canSend = false
+                alert('Примите политику конфиденциальности')
             }
 
-        document.querySelectorAll('.inputHolder input').forEach(i => {
-            console.log(i, i.checkValidity())
-            if ( !i.checkValidity() ) canSend = false
-        })
+            return canSend;
+        }
+
+        canSend = true;
+        if ( i.type !== 'checkbox' )
+            if ( !i.checkValidity() || !i.value ) {
+                i.classList.add('invalid')
+            } else {
+                i.classList.remove('invalid')
+            }
 
         if (!acceptPolicy)
             canSend = false
 
-        console.log(acceptPolicy, canSend)
     }
 
+    let dateInput;
 </script>
 
 <outputForm>
@@ -56,39 +77,49 @@
         Отправьте заявку, мы свяжемся с вами и обсудим условия ипотеки
     </h3>
     <div class="inputHolder">
-        <input bind:value={name} on:blur={(e) => checkThis(e.target)} required type="text" pattern="[A-z]+|[А-я]+" placeholder="Фамилия, имя, отчество"/>
-        <input bind:value={telephone} on:blur={(e) => checkThis(e.target)} required type="text" pattern="\+[0-9]+" placeholder="+7 (927) 226-12-34"/>
-        <!-- <AdvancedPhoneInput 
-            {selectedCountry}
-            bind:value={phoneNumber}
-        /> -->
-        {#if dateInputType == 'date'}
-            <input bind:value={dateOfBirth} on:change={(e) => checkThis(e.target)} required type="date" />
-        {:else}
-            <input required type="text" on:focus={() => dateInputType='date'} placeholder="Дата рождения"/>
-        {/if}
-        
+        <input bind:value={name} on:blur={(e) => checkThis(e.target)} type="text" pattern="[A-z]+|[А-я]+" placeholder="Фамилия, имя, отчество" />
+        <input bind:value={telephone} on:blur={(e) => checkThis(e.target)} type="text" pattern="\+[0-9]+" placeholder="+7 (927) 226-12-34" />
+        <input style={`display: ${(dateInputType == 'date') ? 'block' : 'none'}`} bind:value={dateOfBirth} bind:this={dateInput} on:change={(e) => checkThis(e.target)} type="date" />
+        <input style={`display: ${(dateInputType == 'text') ? 'block' : 'none'}`} type="text" on:mouseenter={(e) => {dateInputType='date'; e.target.remove() }} placeholder="Дата рождения"/>
     </div>
 
     <customCheckbox>
         <label class="container-checkbox">
-            Я соглашаюсь с <a href='#'>политикой конфиденциальности</a>
+            Я соглашаюсь с <a href='/flashprivacy' target="_blank">политикой конфиденциальности</a>
             <input on:click={() => acceptPolicy = !acceptPolicy} on:change={(e) => checkThis(e.target)} type="checkbox" checked={acceptPolicy} >
             <span class="checkmark"></span>
         </label>
     </customCheckbox>
-    <buttonContainer on:click={sendData} on:keydown={() => {}}>
-        <button disabled={!canSend}>
-            Отправить данные
+    <buttonContainer on:click={sendData}>
+        {#if success}
+
+        <button disabled>
+            Данные отправлены
             <blackThing style="width: 5px; right: -10px" />
             <blackThing style="width: 6px; right: -18px;" />
         </button>
+        {:else}
+        <button>
+            Отправить данные
+            <blackThing style="width: 5px; right: -10px" />
+            <blackThing style="width: 6px; right: -18px;" />
+        </button> 
+        {/if}
+        
         
     </buttonContainer>
     
 </outputForm>
 
 <style>
+
+    :global(.invalid) {
+        border: 1px red solid !important;
+    }
+
+    h3 {
+        line-height: 19.2px !important;
+    }
     buttonContainer {
         display: flex;
         flex-direction: row;
@@ -115,7 +146,12 @@
 
     button:disabled{
         cursor: default;
-        opacity: 0.7;
+        opacity: 1;
+        background-color: green;
+    }
+
+    button:hover {
+        border: 1px #2C3442 solid;
     }
     button {
         background-color: #2C3442;
@@ -129,6 +165,7 @@
         font-size: 12px;
         justify-content: center;
         position: relative;
+        padding: 0 !important;
     }
     customCheckbox {
         padding-top: 15px;
@@ -217,15 +254,16 @@
     @media screen and (max-width: 480px) {
         .container-checkbox {
             padding-top: 0px;
-            line-height: 0.9;
+            line-height: 1.3;
         }
 
         .container-checkbox .checkmark {
             background-color: rgb(255, 222, 138);
+            margin-top: 5px;
         }
 
         .container-checkbox:hover input ~ .checkmark {
-        background-color: rgb(255, 222, 138);
+            background-color: rgb(255, 222, 138);
         }
 
         /* When the checkbox is checked, add a blue background */
