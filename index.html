@@ -40,8 +40,6 @@
       
       // Получение суммы кредита.
       window.bankForm.f.getLoanAmount = (costOfRealEstate, initialFee, mortgageYears) => {
-        console.log('shit')
-        // Сумма кредита = Стоимость недвижимости * (100% - первоначальный платёж в %) * Ставку 
         return (costOfRealEstate * ((100 - initialFee) / 100)) * window.bankForm.bankRate / ( 1 - Math.pow(1+window.bankForm.bankRate, -mortgageYears) ) * mortgageYears
       }
   

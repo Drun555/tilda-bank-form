@@ -78,7 +78,7 @@
     </h3>
     <div class="inputHolder">
         <input bind:value={name} on:blur={(e) => checkThis(e.target)} type="text" pattern="[A-z]+|[А-я]+" placeholder="Фамилия, имя, отчество" />
-        <input bind:value={telephone} on:blur={(e) => checkThis(e.target)} type="text" pattern="\+[0-9]+" placeholder="+7 (927) 226-12-34" />
+        <input bind:value={telephone} on:blur={(e) => checkThis(e.target)} type="text" pattern="\+[0-9].+" placeholder="+7 (927) 226-12-34" />
         <input style={`display: ${(dateInputType == 'date') ? 'block' : 'none'}`} bind:value={dateOfBirth} bind:this={dateInput} on:change={(e) => checkThis(e.target)} type="date" />
         <input style={`display: ${(dateInputType == 'text') ? 'block' : 'none'}`} type="text" on:mouseenter={(e) => {dateInputType='date'; e.target.remove() }} placeholder="Дата рождения"/>
     </div>
