@@ -145,6 +145,7 @@
     funnyColorBlock {
         height: 145px;
         padding-left: var(--padding);
+        padding-right: var(--padding);
         padding-top: var(--padding);
     }
     
@@ -196,7 +197,7 @@
         }
 
         :global(yellowinputholder .default:first-child) {
-            width: 120px;
+            width: 113px;
         }
 
         :global(yellowinputholder .default:nth-child(2)) {

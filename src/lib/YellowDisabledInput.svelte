@@ -146,7 +146,7 @@
     @media screen 
         and (max-width: 480px){
         div {
-            min-width: 90px !important;
+            min-width: 107px !important;
         }
 
         h4 {
